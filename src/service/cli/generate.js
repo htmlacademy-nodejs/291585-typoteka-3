@@ -78,7 +78,7 @@ const generatePosts = (count) => (
     title: TITLES[getRandomInt(0, TITLES.length - 1)],
     announce: shuffle(SENTENCES).slice(0, getRandomInt(1, ANNOUNCE_SENTENCES_LIMIT)).join(` `),
     fullText: shuffle(SENTENCES).slice(getRandomInt(ANNOUNCE_SENTENCES_LIMIT, POST_SENTENCES_LIMIT)).join(` `),
-    createdDate: generateDate().toLocaleString('ru'),
+    createdDate: generateDate().toLocaleString(`ru`),
     сategory: shuffle(CATEGORIES).slice(0, 3),
   }))
 );
