@@ -1,8 +1,19 @@
 'use strict';
 
+const fs = require(`fs`);
+const {
+  getRandomInt,
+  shuffle,
+} = require(`../../utils`);
+const {
+  ExitCode
+} = require(`../../constants`);
+
 const DEFAULT_COUNT = 1;
 const MAX_COUNT = 1000;
 const FILE_NAME = `mocks.json`;
+const ANNOUNCE_SENTENCES_LIMIT = 5;
+const POST_SENTENCES_LIMIT = 10;
 
 const TITLES = [
   `Ёлки. История деревьев`,
@@ -54,8 +65,38 @@ const CATEGORIES = [
   `Железо`,
 ];
 
+const generateDate = () => {
+  // Три месяца
+  const lowerLimitDate = 3 * 30 * 24 * 60 * 60 * 1000;
+  const currentDate = Date.now();
+
+  return new Date(getRandomInt(currentDate - lowerLimitDate, currentDate));
+};
+
+const generatePosts = (count) => (
+  Array(count).fill({}).map(() => ({
+    title: TITLES[getRandomInt(0, TITLES.length - 1)],
+    announce: shuffle(SENTENCES).slice(0, getRandomInt(1, ANNOUNCE_SENTENCES_LIMIT)).join(` `),
+    fullText: shuffle(SENTENCES).slice(getRandomInt(ANNOUNCE_SENTENCES_LIMIT, POST_SENTENCES_LIMIT)).join(` `),
+    createdDate: generateDate().toLocaleString('ru'),
+    сategory: shuffle(CATEGORIES).slice(0, 3),
+  }))
+);
+
 module.exports = {
   name: `--generate`,
-  run() {
+  run(args) {
+    let [count] = args;
+    count = count > MAX_COUNT ? MAX_COUNT : count;
+    const countOffer = Number.parseInt(count, 10) || DEFAULT_COUNT;
+    const content = JSON.stringify(generatePosts(countOffer));
+
+    fs.writeFile(FILE_NAME, content, (err) => {
+      if (err) {
+        process.exit(ExitCode.error);
+      }
+
+      process.exit(ExitCode.success);
+    });
   }
 };

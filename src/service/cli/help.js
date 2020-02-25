@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  name: `--version`,
+  name: `--help`,
   run() {
     console.info(`
       Программа запускает http-сервер и формирует файл с данными для API.
