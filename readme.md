@@ -1,7 +1,7 @@
 # Личный проект «Типотека» [![Build status][travis-image]][travis-url]
 
 * Студент: [Валентин Багадин](https://up.htmlacademy.ru/nodejs/3/user/291585).
-* Наставник: [Олег Поляков](https://up.htmlacademy.ru/nodejs/3/user/1296165).
+* Наставник: [Сергей Рожков](https://up.htmlacademy.ru/nodejs/3/user/1069033).
 
 ---
 
